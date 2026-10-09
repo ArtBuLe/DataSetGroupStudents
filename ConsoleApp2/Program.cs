@@ -54,7 +54,7 @@ namespace TEST
             {
                 if  (
                     Convert.ToString(row.GetParentRow("GroupStudents")!["Name"]) == group ||
-                    Convert.ToInt32(row["GroupId"]) == Convert.ToInt32(group)
+                    Convert.ToString(row["GroupId"]) == Convert.ToString(group)
                     )
                 {
                     Console.WriteLine
