@@ -14,9 +14,9 @@ namespace TEST
             Groups.Columns.Add("Name", typeof(string));
             Groups.PrimaryKey = new[] { Groups.Columns["Id"]! };
 
-            Groups.Rows.Add(0, "MonsterHunter");
-            Groups.Rows.Add(1, "EldenRing");
-            Groups.Rows.Add(2, "Sekiro");
+            Groups.Rows.Add(0, "Программисты");
+            Groups.Rows.Add(1, "Дизайнеры");
+            Groups.Rows.Add(2, "Никто не знает кто они");
 
             DataTable Students = new DataTable();
             Students.Columns.Add("Id", typeof(int));
@@ -25,9 +25,16 @@ namespace TEST
             Students.Columns.Add("GroupId", typeof(int));
             Students.PrimaryKey = new[] { Students.Columns["Id"]! };
 
-            Students.Rows.Add(0, "Art", 18, 0);
-            Students.Rows.Add(1, "Gleb", 20, 1);
-            Students.Rows.Add(2, "Anton", 21, 2);
+            Students.Rows.Add(0, "Арт", 18, 0);
+            Students.Rows.Add(1, "Матвей", 20, 0);
+            Students.Rows.Add(2, "Ботвей", 21, 1);
+            Students.Rows.Add(3, "Никита", 18, 0);
+            Students.Rows.Add(4, "Мыкыта", 99, 2);
+            Students.Rows.Add(5, "Катя", 17, 1);
+            Students.Rows.Add(6, "Люба", 23, 2);
+            Students.Rows.Add(7, "Карен", 17, 0);
+            Students.Rows.Add(8, "Вадим", 21, 0);
+            Students.Rows.Add(9, "НеВадим", 21, 1);
 
 
             dataSet.Tables.Add(Students);
@@ -40,9 +47,17 @@ namespace TEST
                     Students.Columns["GroupId"]!
                 );
 
+            Console.WriteLine("Введите имя или айди группы : ");
+            string group = Console.ReadLine()!;
+
             foreach (DataRow row in Students.Rows)
             {
-                Console.WriteLine
+                if  (
+                    Convert.ToString(row.GetParentRow("GroupStudents")!["Name"]) == group ||
+                    Convert.ToInt32(row["GroupId"]) == Convert.ToInt32(group)
+                    )
+                {
+                    Console.WriteLine
                     (
                     $"{row["Id"],-3} | " +
                     $"{row["Name"],-10} | " +
@@ -50,6 +65,7 @@ namespace TEST
                     $"{row["GroupId"],-2} - " +
                     $"{row.GetParentRow("GroupStudents")!["Name"],-10}"
                     );
+                }
             }
         }
     }
